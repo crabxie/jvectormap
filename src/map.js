@@ -842,6 +842,7 @@ jvm.Map.prototype = {
 
     this.markersGroup = this.markersGroup || this.canvas.addGroup();
     this.markerLabelsGroup = this.markerLabelsGroup || this.canvas.addGroup();
+    this.badgeGroup = this.badgeGroup || this.canvas.addGroup();
 
     if (jvm.$.isArray(markers)) {
       markersArray = markers.slice();
@@ -854,9 +855,10 @@ jvm.Map.prototype = {
     for (i in markers) {
       markerConfig = markers[i] instanceof Array ? {latLng: markers[i]} : markers[i];
       point = this.getMarkerPosition( markerConfig );
-
       if (point !== false) {
         marker = new jvm.Marker({
+          badge:this.params.badge,
+          badgeGroup:this.badgeGroup,
           map: this,
           style: jvm.$.extend(true, {}, this.params.markerStyle, {initial: markerConfig.style || {}}),
           labelStyle: jvm.$.extend(true, {}, this.params.markerLabelStyle),
